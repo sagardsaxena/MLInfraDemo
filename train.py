@@ -21,9 +21,10 @@ parser.add_argument("--c", type=float, required=True)
 parser.add_argument("--noise", type=float, default=0)
 
 # training arguments
-parser.add_argument("--steps", type=int, default=2000)
-parser.add_argument("--log_save_step", type=int, default=160)
-parser.add_argument("--batch_size", type=int, default=8)
+parser.add_argument("--steps", type=int, default=16384)
+parser.add_argument("--log_save_step", type=int, default=256)
+parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--learning_rate", type=float, default=0.1)
 
 # logging arguments
 parser.add_argument("--wandb_user", type=str, required=True)
@@ -37,7 +38,7 @@ wandb.init(
     group=f"{args.a}x + {args.b}y + {args.c} > 0",
     job_type="train",
     tags=["SimpleDataset", "SimpleModel"],
-    name=f"Noise: {args.noise}, Steps: {args.steps}",
+    name=f"Noise: {args.noise}, Steps: {args.steps}; LR: {args.learning_rate}",
 )
 
 # create dataset
@@ -54,7 +55,9 @@ dataset = dataset.with_options(options)
 if args.num_gpus > 1:
     strategy = tf.distribute.MirroredStrategy()
     with strategy.scope():
-        model = SimpleModel(args.batch_size, args.num_gpus, strategy)
+        model = SimpleModel(
+            args.batch_size, args.learning_rate, args.num_gpus, strategy
+        )
 else:
     model = SimpleModel(args.batch_size, args.num_gpus)
 

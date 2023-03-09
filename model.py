@@ -6,7 +6,7 @@ import wandb
 
 
 class SimpleModel:
-    def __init__(self, batch_size=4, num_gpus=2, strategy=None):
+    def __init__(self, batch_size, learning_rate, num_gpus, strategy=None):
         # create a simple classification model
         self.model = Dense(1, use_bias=True)
 
@@ -16,7 +16,7 @@ class SimpleModel:
         )
 
         # optimizer
-        self.optimizer = tf.keras.optimizers.Adam()
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
         # global batch size
         self.batch_size = batch_size
