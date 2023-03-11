@@ -3,7 +3,12 @@
 ## Set Up The Repository
 
 ```bash
+# clone the repo
 git clone git@github.com:sagardsaxena/MLInfraDemo.git
+cd MLInfraDemo
+
+# add python module file
+module add Python3/3.10.4
 bash setup.sh
 ```
 
