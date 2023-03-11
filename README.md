@@ -3,7 +3,12 @@
 ## Set Up The Repository
 
 ```bash
+# clone the repo
 git clone git@github.com:sagardsaxena/MLInfraDemo.git
+cd MLInfraDemo
+
+# add python module file
+module add Python3/3.10.4
 bash setup.sh
 ```
 
@@ -19,6 +24,7 @@ srun --pty --qos=medium --time=01:00:00 --mem=20gb \
  --gres=gpu:2 --cpus-per-task=8 bash
 
 # add module files
+module add Python3/3.10.4
 module add cuda/11.3.1 
 module add cudnn/v8.2.1
 ```
